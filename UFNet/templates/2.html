@@ -1,0 +1,36 @@
+/css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <script>
+        function addFile(filename) {
+            var supportedExtensions = [
+                '', 'doc', 'docx', 'exe', 'jpg', 'js', 'mp4', 'pdf', 'hyperlink', 'png'
+            ];
+            var ext = filename.split('.')[Math.max(filename.split('.').length - 1, 0)].toLowerCase();
+            var name = filename.slice(0, - ext.length - 1);
+            if (!supportedExtensions.includes(ext)) {
+                console.log('extension not supported: ' + ext);
+                ext = 'undefined';
+            }
+            let address = filename;
+            if (ext == undefined) {
+                ext = '';
+            }
+            else if (ext=='hyperlink'){
+                let code = name.split('.')[name.split('.').length - 1];
+                let content = name.slice(0, - code.length - 1);
+                if (code == 'url'){
+                    name = content.split('.')[0];
+                    let rawUrl = content.slice(name.length + 1, content.length);
+                    let protocol = rawUrl.split('.')[0];
+                    let url = rawUrl.slice(protocol.length + 1, rawUrl.length);
+                    address = `${protocol}://${url}`;
+                }
+                else if (code == 'folder'){
+                    address = `${content}/UFNet.index.html`;
+                    name = content;
+                }
+            }
+            document.write(`<a href="${address}" class="a-file"><div class="btn-file">` + 
+                `<img src="
